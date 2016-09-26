@@ -29,8 +29,8 @@ public class MapsActivity extends FragmentActivity{
     double lat = 0.0;
     double lng = 0.0;
     TextView latitude, longitude;
-    int UPDATE_INTERVAL = 5000;
-    private String stringparser;
+    int UPDATE_INTERVAL = 50000;
+    String stringparser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
