@@ -20,12 +20,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MapsActivity extends FragmentActivity{
 
     private GoogleMap mMap;
     double lat = 0.0;
     double lng = 0.0;
     TextView latitude, longitude;
+    int UPDATE_INTERVAL = 15000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,8 @@ public class MapsActivity extends FragmentActivity{
             if (location != null) {
                 lat = location.getLatitude();
                 lng = location.getLongitude();
+                latitude.setText("Latitude: " + String.valueOf(lat));
+                longitude.setText("Longitude: " + String.valueOf(lng));
             }
         }
 
@@ -100,11 +106,19 @@ public class MapsActivity extends FragmentActivity{
 
         LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, locListener);
-        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        lat = myLocation.getLatitude();
-        lng = myLocation.getLongitude();
-        latitude.setText("Latitude: " + String.valueOf(lat));
-        longitude.setText("Longitude: " + String.valueOf(lng));
+        final Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate( new TimerTask()
+        {
+            @Override
+            public void run(){
+                runOnUiThread(new Runnable() {
+                @Override
+                public void run(){
+                    locListener.onLocationChanged(myLocation);
+                    }
+                });
+            }
+        }, 0, UPDATE_INTERVAL);
     }
-
 }
