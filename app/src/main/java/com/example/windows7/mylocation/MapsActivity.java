@@ -86,6 +86,7 @@ public class MapsActivity extends FragmentActivity{
     };
 
     private void setUpMap() {
+        //Permissions
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
@@ -100,8 +101,8 @@ public class MapsActivity extends FragmentActivity{
         LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 0, locListener);
         Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        lng = myLocation.getLongitude();
         lat = myLocation.getLatitude();
+        lng = myLocation.getLongitude();
         latitude.setText("Latitude: " + String.valueOf(lat));
         longitude.setText("Longitude: " + String.valueOf(lng));
     }

@@ -25,6 +25,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -38,6 +41,8 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     double lat = 0.0;
     double lng = 0.0;
     private TextView latlng;
+
+    int UPDATE_INTERVAL = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +64,13 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         latlng = (TextView) findViewById(R.id.latlng);
-        makeJsonObjectRequest();
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate( new TimerTask()
+        {
+            public void run(){
+                makeJsonObjectRequest();
+            }
+        }, 0, UPDATE_INTERVAL);
     }
 
     private void makeJsonObjectRequest() {
@@ -113,7 +124,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        mMap.clear();
         LatLng location = new LatLng(lat, lng);
         mMap.addMarker(new MarkerOptions().position(location).title("Location from Web Service"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,15));
