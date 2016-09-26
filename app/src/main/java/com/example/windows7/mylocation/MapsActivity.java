@@ -2,6 +2,7 @@ package com.example.windows7.mylocation;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationListener;
@@ -14,6 +15,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import android.support.v4.content.ContextCompat;
 
 import android.content.pm.PackageManager;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,15 @@ public class MapsActivity extends FragmentActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Button next = (Button) findViewById(R.id.button);
+        next.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent myIntent = new Intent(view.getContext(), MapsActivity2.class);
+                startActivityForResult(myIntent, 0);
+            }
+        });
+
         latitude = (TextView) findViewById(R.id.latitude);
         longitude = (TextView) findViewById(R.id.longitude);
         setUpMapIfNeeded();
