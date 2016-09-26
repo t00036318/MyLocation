@@ -29,7 +29,7 @@ public class MapsActivity extends FragmentActivity{
     double lat = 0.0;
     double lng = 0.0;
     TextView latitude, longitude;
-    int UPDATE_INTERVAL = 50000;
+    int UPDATE_INTERVAL = 15000;
     String stringparser;
 
     @Override
