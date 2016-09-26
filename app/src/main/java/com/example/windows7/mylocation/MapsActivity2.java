@@ -40,7 +40,7 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
 
     double lat = 0.0;
     double lng = 0.0;
-    private TextView latlng;
+    TextView latitude, longitude;
 
     int UPDATE_INTERVAL = 5000;
 
@@ -63,7 +63,8 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        latlng = (TextView) findViewById(R.id.latlng);
+        latitude = (TextView) findViewById(R.id.lat2);
+        longitude = (TextView) findViewById(R.id.lng2);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate( new TimerTask()
         {
@@ -86,11 +87,12 @@ public class MapsActivity2 extends FragmentActivity implements OnMapReadyCallbac
                     lat = response.getDouble("latitud");
                     lng = response.getDouble("longitud");
 
-                    jsonResponse = "";
-                    jsonResponse += "Latitude: " + lat + "\n\n";
-                    jsonResponse += "Longitude: " + lng + "\n\n";
+                    jsonResponse = "Latitude: " + lat + "\n\n";
+                    latitude.setText(jsonResponse);
 
-                    latlng.setText(jsonResponse);
+                    jsonResponse = "Longitude: " + lng + "\n\n";
+                    longitude.setText(jsonResponse);
+
                     onMapReady(mMap);
 
                 } catch (JSONException e) {

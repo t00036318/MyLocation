@@ -30,6 +30,7 @@ public class MapsActivity extends FragmentActivity{
     double lng = 0.0;
     TextView latitude, longitude;
     int UPDATE_INTERVAL = 5000;
+    private String stringparser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +71,10 @@ public class MapsActivity extends FragmentActivity{
             if (location != null) {
                 lat = location.getLatitude();
                 lng = location.getLongitude();
-                latitude.setText("Latitude: " + String.valueOf(lat));
-                longitude.setText("Longitude: " + String.valueOf(lng));
+                stringparser = "Latitude: " + lat + "\n";
+                latitude.setText(stringparser);
+                stringparser = "Longitude: " + lng + "\n";
+                longitude.setText(stringparser);
             }
         }
 
@@ -105,7 +108,7 @@ public class MapsActivity extends FragmentActivity{
         }
 
         LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_INTERVAL, 0, locListener);
         final Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate( new TimerTask()
